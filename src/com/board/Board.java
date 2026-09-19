@@ -41,15 +41,7 @@ public class Board {
 	}
 	
 	public boolean move(Cell c1, Cell c2) {
-		if(isCellEmpty(c1)) {
-			System.out.println("Invalid move Cell c1 is Empty");
-			return false;
-		}
 		Piece source=grid[c1.row()][c1.column()];
-		if(!isValidCell(c2)) {
-			System.out.println("Cell c2 is Out of board");
-			return false;
-		}
 		if(!isMovePossible(source,c1,c2)) {
 			System.out.println("Move is not possible");
 			return false;
@@ -80,11 +72,11 @@ public class Board {
 			blacksAlive--;
 	}
 	
-	private boolean isCellEmpty(Cell c) {
+	public boolean isCellEmpty(Cell c) {
 		return grid[c.row()][c.column()]==null;
 	}
 	
-	private boolean isValidCell(Cell c) {
+	public boolean isValidCell(Cell c) {
 		return c.row()>=0 && c.row()<8 && c.column()>=0 && c.column()<8;
 	}
 	public boolean isOneArmyDown() {

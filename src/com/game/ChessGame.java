@@ -24,17 +24,16 @@ public class ChessGame {
 		turn.add(p2);
 	}
 	
-	public void move(Cell c1, Cell c2) {
+	public void move(Cell source, Cell destination) {
 		if(state==GameState.COMPLETED) {
 			System.out.println("Game Already Completed");
 			return;
 		}
 		Player cur=turn.peek();
-		if(!board.isPieceValidColor(c1, cur.getColor())) {
-			System.out.println("Player is picking opposite color piece");
+		if(!validMove(source,destination,cur)) {
 			return;
 		}
-		boolean success = board.move(c1, c2);
+		boolean success = board.move(source, destination);
 		
 		if(success) {
 			swapPlayers();
@@ -43,6 +42,9 @@ public class ChessGame {
 				state=GameState.COMPLETED;
 			}
 		}
+	}
+	private boolean validMove(Cell source, Cell destination, Player player) {
+		return !board.isCellEmpty(source) && !board.isValidCell(destination) && !board.isPieceValidColor(source, player.getColor());
 	}
 	private void swapPlayers() {
 		Player cur=turn.poll();
