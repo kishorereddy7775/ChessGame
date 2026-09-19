@@ -22,26 +22,30 @@ public class ChessGame {
 		state=GameState.ACTIVE;
 		turn.add(p1);
 		turn.add(p2);
-		p1.setColor(Color.WHITE);
-		p2.setColor(Color.BLACK);
 	}
 	
 	public void move(Cell c1, Cell c2) {
 		if(state==GameState.COMPLETED) {
 			System.out.println("Game Already Completed");
+			return;
 		}
 		Player cur=turn.peek();
 		if(!board.isPieceValidColor(c1, cur.getColor())) {
 			System.out.println("Player is picking opposite color piece");
 			return;
 		}
-		board.move(c1, c2);
-		turn.poll();
-		if(board.isOneArmyDown()) {
-			state=GameState.COMPLETED;
-			winner=cur;
-			return;
+		boolean success = board.move(c1, c2);
+		
+		if(success) {
+			swapPlayers();
+			if(board.isOneArmyDown()) {
+				winner=cur;
+				state=GameState.COMPLETED;
+			}
 		}
+	}
+	private void swapPlayers() {
+		Player cur=turn.poll();
 		turn.add(cur);
 	}
 }
