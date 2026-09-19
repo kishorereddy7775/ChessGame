@@ -8,7 +8,7 @@ import com.entities.Color;
 
 public abstract class Piece {
 
-	protected Color color;
+	private final Color color;
 	public Piece(Color color) {
 		this.color=color;
 	}

@@ -15,11 +15,11 @@ public class Pawn extends Piece {
 		int rowDiff=destination.row()-source.row();
 		int columnDiff=Math.abs(source.column()-destination.column());
 		
-		if(color==Color.WHITE) {
-			return ((rowDiff==1 && columnDiff==0) || (rowDiff==2 && source.row()==1 ) && board.getPiece(destination.row(), destination.column())==null) ||
+		if(getColor()==Color.WHITE) {
+			return (((rowDiff==1 && columnDiff==0) || (rowDiff==2 && source.row()==1 )) && board.getPiece(destination.row(), destination.column())==null) ||
 					(rowDiff==1 && columnDiff==1 && board.getPiece(destination.row(),destination.column())!=null);
 		}else {
-			return ((rowDiff==-1 && columnDiff==0) || (rowDiff==-2 && source.row()==6)  && board.getPiece(destination.row(), destination.column())==null) ||
+			return (((rowDiff==-1 && columnDiff==0) || (rowDiff==-2 && source.row()==6))  && board.getPiece(destination.row(), destination.column())==null) ||
 					(rowDiff==-1 && columnDiff==1 && board.getPiece(destination.row(),destination.column())!=null);
 		}
 	}

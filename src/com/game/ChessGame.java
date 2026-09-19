@@ -22,15 +22,20 @@ public class ChessGame {
 		blackPlayer=p2;
 		currentPlayer=whitePlayer;
 	}
-	
-	public void makeMove(int r1,int c1,int r2, int c2) {
-		makeMove(new Move(board.getCell(r1, c1),board.getCell(r2, c2)));
+	//To test
+	public boolean makeMove(int r1,int c1,int r2, int c2) {
+		return makeMove(new Move(board.getCell(r1, c1),board.getCell(r2, c2)));
 	}
 	
-	private void makeMove(Move move) {
-		if(board.move(move)) {
-			swapPlayers();
+	private boolean makeMove(Move move) {
+		Piece piece = move.getStart().getPiece();
+		if(piece==null || piece.getColor()!=currentPlayer.getColor())
+			return false;
+		if(!board.move(move)) {
+			return false;
 		}
+		swapPlayers();
+		return true;
 	}
 	
 	private void swapPlayers() {
