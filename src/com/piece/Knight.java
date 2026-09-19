@@ -11,8 +11,7 @@ public class Knight extends Piece {
 	}
 
 	public boolean isValidMove(Cell source, Cell destination) {
-		return Movement.isTwoRowAbove(source, destination) || Movement.isOneRowAbove(source, destination) || 
-				Movement.isOneRowBelow(source, destination) || Movement.isTwoRowBelow(source, destination); 
+		return Movement.isKnightMove(source, destination); 
 	}
 	
 	

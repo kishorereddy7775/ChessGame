@@ -11,7 +11,7 @@ public class Queen extends Piece {
 	}
 
 	public boolean isValidMove(Cell c1, Cell c2) {
-		return Movement.isDiagonal(c1, c2) || Movement.isSameRow(c1, c2) || Movement.isSameRow(c1, c2);
+		return Movement.isDiagonal(c1, c2) || Movement.isSameRow(c1, c2) || Movement.isSameColumn(c1, c2);
 	}
 
 }

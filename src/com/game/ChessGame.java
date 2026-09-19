@@ -44,7 +44,7 @@ public class ChessGame {
 		}
 	}
 	private boolean validMove(Cell source, Cell destination, Player player) {
-		return !board.isCellEmpty(source) && !board.isValidCell(destination) && !board.isPieceValidColor(source, player.getColor());
+		return !board.isCellEmpty(source) && board.isValidCell(destination) && board.isPieceValidColor(source, player.getColor());
 	}
 	private void swapPlayers() {
 		Player cur=turn.poll();
