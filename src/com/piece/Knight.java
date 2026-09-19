@@ -1,8 +1,8 @@
 package com.piece;
 
+import com.board.Board;
 import com.entities.Cell;
 import com.entities.Color;
-import com.entities.Movement;
 
 public class Knight extends Piece {
 
@@ -10,9 +10,10 @@ public class Knight extends Piece {
 		super(color);
 	}
 
-	public boolean isValidMove(Cell source, Cell destination) {
-		return Movement.isKnightMove(source, destination); 
+	@Override
+	public boolean isValidMove(Board board, Cell source, Cell destination) {
+		int rowDiff=Math.abs(source.row()-destination.row());
+		int columnDiff=Math.abs(source.column()-destination.column());
+		return (rowDiff==1 && columnDiff==2) || (rowDiff==2 || columnDiff==1);
 	}
-	
-	
 }

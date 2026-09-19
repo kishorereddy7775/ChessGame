@@ -1,8 +1,8 @@
 package com.piece;
 
+import com.board.Board;
 import com.entities.Cell;
 import com.entities.Color;
-import com.entities.Movement;
 
 public class Bishop extends Piece{
 
@@ -10,10 +10,11 @@ public class Bishop extends Piece{
 		super(color);
 	}
 
-	public boolean isValidMove(Cell c1, Cell c2) {
-		return Movement.isDiagonal(c1, c2);
+	@Override
+	public boolean isValidMove(Board board, Cell source, Cell destination) {
+		int rowDiff=Math.abs(source.row()-destination.row());
+		int columnDiff=Math.abs(source.column()-destination.column());
+		return rowDiff==columnDiff;
 	}
-	
-	
 	
 }

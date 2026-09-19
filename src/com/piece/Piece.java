@@ -2,6 +2,7 @@ package com.piece;
 
 import java.util.List;
 
+import com.board.Board;
 import com.entities.Cell;
 import com.entities.Color;
 
@@ -16,6 +17,6 @@ public abstract class Piece {
 		return color;
 	}
 	
-	public abstract boolean isValidMove(Cell source, Cell destination);
+	public abstract boolean isValidMove(Board board, Cell source, Cell destination);
 	
 }

@@ -1,8 +1,8 @@
 package com.piece;
 
+import com.board.Board;
 import com.entities.Cell;
 import com.entities.Color;
-import com.entities.Movement;
 
 public class Pawn extends Piece {
 
@@ -10,8 +10,14 @@ public class Pawn extends Piece {
 		super(color);
 	}
 
-	public boolean isValidMove(Cell c1, Cell c2) {
-		return Movement.isOneStepAway(c1, c2) || Movement.isTwoStepAway(c1, c2) || Movement.isCrossMove(c1, c2);
+	@Override
+	public boolean isValidMove(Board board, Cell source, Cell destination) {
+		int rowDiff=Math.abs(source.row()-destination.row());
+		int columnDiff=Math.abs(source.column()-destination.column());
+		
+		return (rowDiff==1 && columnDiff==0) || (rowDiff==2 && (source.row()==1 || source.row()==6)) ||
+				(rowDiff==1 && columnDiff==1 && board.getPiece(destination.row(),destination.column())!=null);
+		
 	}
 
 }

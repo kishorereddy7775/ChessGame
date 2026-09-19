@@ -1,53 +1,64 @@
 package com.game;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.Scanner;
 
 import com.board.Board;
 import com.entities.Cell;
 import com.entities.Color;
-import com.entities.GameState;
+import com.entities.Move;
 import com.entities.Player;
+import com.exception.InvalidMoveException;
+import com.piece.Piece;
 
 public class ChessGame {
 
 	private final Board board;
-	private Queue<Player> turn;
-	private Player winner;
-	private GameState state;
+	private final Player whitePlayer, blackPlayer;
+	private Player currentPlayer;
 	
 	public ChessGame(Player p1, Player p2) {
 		board=new Board();
-		turn=new ArrayDeque<>();
-		state=GameState.ACTIVE;
-		turn.add(p1);
-		turn.add(p2);
+		whitePlayer=p1;
+		blackPlayer=p2;
+		currentPlayer=whitePlayer;
 	}
 	
-	public void move(Cell source, Cell destination) {
-		if(state==GameState.COMPLETED) {
-			System.out.println("Game Already Completed");
-			return;
-		}
-		Player cur=turn.peek();
-		if(!validMove(source,destination,cur)) {
-			return;
-		}
-		boolean success = board.move(source, destination);
-		
-		if(success) {
-			swapPlayers();
-			if(board.isOneArmyDown()) {
-				winner=cur;
-				state=GameState.COMPLETED;
+	public void start() {
+		while(!isGameOver()) {
+			Move move;
+			try {
+				move=getPlayerMove();
+			} catch (InvalidMoveException e) {
+				System.out.println(e.getMessage());
+				continue;
+			}
+			if(board.move(move)) {
+				swapPlayers();
 			}
 		}
 	}
-	private boolean validMove(Cell source, Cell destination, Player player) {
-		return !board.isCellEmpty(source) && board.isValidCell(destination) && board.isPieceValidColor(source, player.getColor());
-	}
+	
 	private void swapPlayers() {
-		Player cur=turn.poll();
-		turn.add(cur);
+		currentPlayer = (currentPlayer==whitePlayer)?blackPlayer:whitePlayer;
+	}
+	private Move getPlayerMove() throws InvalidMoveException {
+		Scanner scanner=new Scanner(System.in);
+		
+		int sourceRow=scanner.nextInt();
+		int sourceColumn=scanner.nextInt();
+		
+		int destinationRow=scanner.nextInt();
+		int destinationColumn=scanner.nextInt();
+		
+		Piece piece = board.getPiece(sourceRow, sourceColumn);
+		if(piece==null || piece.getColor()!=currentPlayer.getColor()) {
+			throw new InvalidMoveException("Invalid Move");
+		}
+				
+		return new Move(board.getCell(sourceRow, sourceColumn),board.getCell(destinationRow, destinationColumn));
+	}
+	
+	public boolean isGameOver() {
+		return board.isCheckMate() || board.isStaleMate();
 	}
 }
