@@ -12,12 +12,16 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean isValidMove(Board board, Cell source, Cell destination) {
-		int rowDiff=Math.abs(source.row()-destination.row());
+		int rowDiff=destination.row()-source.row();
 		int columnDiff=Math.abs(source.column()-destination.column());
 		
-		return (rowDiff==1 && columnDiff==0) || (rowDiff==2 && (source.row()==1 || source.row()==6)) ||
-				(rowDiff==1 && columnDiff==1 && board.getPiece(destination.row(),destination.column())!=null);
-		
+		if(color==Color.WHITE) {
+			return ((rowDiff==1 && columnDiff==0) || (rowDiff==2 && source.row()==1 ) && board.getPiece(destination.row(), destination.column())==null) ||
+					(rowDiff==1 && columnDiff==1 && board.getPiece(destination.row(),destination.column())!=null);
+		}else {
+			return ((rowDiff==-1 && columnDiff==0) || (rowDiff==-2 && source.row()==6)  && board.getPiece(destination.row(), destination.column())==null) ||
+					(rowDiff==-1 && columnDiff==1 && board.getPiece(destination.row(),destination.column())!=null);
+		}
 	}
 
 }
