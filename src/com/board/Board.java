@@ -46,8 +46,11 @@ public class Board {
 		Cell c1=move.getStart();
 		Cell c2=move.getEnd();
 		Piece source=grid[c1.row()][c1.column()].getPiece();
-		if(source==null || !source.isValidMove(this, c1, c2))
+		Piece destination = grid[c2.row()][c2.column()].getPiece();
+		if(source==null || !source.isValidMove(this, c1, c2) || (destination!=null && destination.getColor()==source.getColor())) {
+			System.out.println("Invalid Move");
 			return false;
+		}
 		c2.setPiece(source);
 		c1.setPiece(null);	
 		return true;

@@ -11,7 +11,7 @@ public class GameTest {
 		Player p1=new Player(1,"Ramesh",Color.WHITE);
 		Player p2=new Player(1,"Suresh",Color.BLACK);
 		ChessGame game=new ChessGame(p1,p2);
-		game.start();
+		game.makeMove(0,1,3,3);
 	}
 
 }
